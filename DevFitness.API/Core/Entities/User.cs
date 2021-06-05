@@ -21,5 +21,14 @@ namespace DevFitness.API.Core.Entities
         public DateTime BirthDate { get; private set; }
 
         public IEnumerable<Meal> Meals { get; private set; }
+
+        public void Update(decimal height, decimal weight)
+        {
+            if (height > 0 && weight > 0)
+            {
+                this.Height = height;
+                this.Weight = weight;
+            }
+        }
     }
 }
