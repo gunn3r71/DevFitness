@@ -1,4 +1,5 @@
-﻿using DevFitness.API.Core.Entities;
+﻿using AutoMapper;
+using DevFitness.API.Core.Entities;
 using DevFitness.API.Models.InputModels;
 using DevFitness.API.Models.ViewModels;
 using DevFitness.API.Persistence;
@@ -16,17 +17,19 @@ namespace DevFitness.API.Controllers
     public class MealsController : ControllerBase
     {
         private readonly DevFitnessDbContext _context;
+        private readonly IMapper _mapper;
 
-        public MealsController(DevFitnessDbContext context)
+        public MealsController(DevFitnessDbContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Get(int userId)
         {
             var allMeals = _context.Meals.Where(x => x.UserId == userId).ToList();
-            var allMealsViewModel = allMeals.Select(x => new MealViewModel(x.Id,x.Description,x.Calories,x.Date));
+            var allMealsViewModel = allMeals.Select(x => _mapper.Map<MealViewModel>(x));
             return Ok(allMealsViewModel);
         }
         
@@ -37,7 +40,7 @@ namespace DevFitness.API.Controllers
             if (meal == null)
                 return NotFound($"Cannot find mealt with id: {mealId}");
             
-            var mealviewModel = new MealViewModel(meal.Id, meal.Description, meal.Calories, meal.Date);
+            var mealviewModel = _mapper.Map<MealViewModel>(meal);
 
             return Ok(mealviewModel);
         }

@@ -7,6 +7,9 @@ namespace DevFitness.API.Core.Entities
 {
     public class User : Base
     {
+        protected User()
+        {
+        }
         public User(string fullName, decimal height, decimal weight, DateTime birthDate) : base()
         {
             FullName = fullName;

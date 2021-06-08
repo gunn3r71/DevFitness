@@ -1,4 +1,5 @@
-﻿using DevFitness.API.Core.Entities;
+﻿using AutoMapper;
+using DevFitness.API.Core.Entities;
 using DevFitness.API.Models.InputModels;
 using DevFitness.API.Models.ViewModels;
 using DevFitness.API.Persistence;
@@ -16,10 +17,11 @@ namespace DevFitness.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DevFitnessDbContext _context;
-
-        public UsersController(DevFitnessDbContext context)
+        private readonly IMapper _mapper;
+        public UsersController(DevFitnessDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -30,15 +32,25 @@ namespace DevFitness.API.Controllers
             if (_user == null)
                 return NotFound($"Cannot find user with id: {id}");
 
-            var userViewModel = new UserViewModel(_user.Id,_user.FullName,_user.Height,_user.Weight,_user.BirthDate);
+            var userViewModel = _mapper.Map<UserViewModel>(_user);
 
             return Ok(userViewModel);
         }
-
+        /// api/users método HTTP POST
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        /// <remarks>
+        /// {
+        ///     "fullname"
+        /// }
+        /// </remarks>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Post([FromBody] CreateUserInputModel user)
         {
-            var _user = new User(user.FullName,user.Height,user.Weight,user.BirthDate);
+            var _user = _mapper.Map<User>(user);
 
             _context.Users.Add(_user);
             _context.SaveChanges();

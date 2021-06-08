@@ -1,4 +1,5 @@
 using DevFitness.API.Persistence;
+using DevFitness.API.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace DevFitness.API
 {
@@ -25,14 +29,36 @@ namespace DevFitness.API
             string ConnectionString = Configuration.GetConnectionString("DevFitnessCs");
 
             services.AddDbContext<DevFitnessDbContext>(
+                options =>
+                {
+                    options.UseInMemoryDatabase("DevFitness");
+                });
+            /*services.AddDbContext<DevFitnessDbContext>(
                 options => {
                     options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
                 });
+            */
+
+            //Configurando Automapper
+            services.AddAutoMapper(typeof(UserProfile));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevFitness.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "DevFitness.API",
+                    Version = "v1",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "Lucas.p.oliveira@outlook.pt",
+                        Name = "Lucas Pereira",
+                        Url = new Uri("https://www.linkedin.com/in/lucas-pereira-cod3r/")
+                    }
+                });
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var path = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //c.IncludeXmlComments(path);
             });
         }
 
@@ -42,6 +68,11 @@ namespace DevFitness.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevFitness.API v1"));
+            }
+            else
+            {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevFitness.API v1"));
             }
