@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevFitness.API</name>
+    </assembly>
+    <members>
+        <member name="M:DevFitness.API.Controllers.UsersController.Post(DevFitness.API.Models.InputModels.CreateUserInputModel)">
+            api/users método HTTP POST
+            <summary>
+            Create a new user
+            </summary>
+            <remarks>
+            {
+                "fullname"
+            }
+            </remarks>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

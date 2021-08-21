@@ -22,24 +22,16 @@ namespace DevFitness.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Configurando bd
             string ConnectionString = Configuration.GetConnectionString("DevFitnessCs");
 
             services.AddDbContext<DevFitnessDbContext>(
                 options =>
                 {
-                    options.UseInMemoryDatabase("DevFitness");
-                });
-            /*services.AddDbContext<DevFitnessDbContext>(
-                options => {
                     options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
                 });
-            */
 
-            //Configurando Automapper
             services.AddAutoMapper(typeof(UserProfile));
 
             services.AddControllers();
@@ -56,9 +48,9 @@ namespace DevFitness.API
                         Url = new Uri("https://www.linkedin.com/in/lucas-pereira-cod3r/")
                     }
                 });
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //var path = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //c.IncludeXmlComments(path);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var path = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(path);
             });
         }
 

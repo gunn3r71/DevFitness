@@ -1,37 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DevFitness.Core.Entities.Base;
 
-namespace DevFitness.API.Core.Entities
+namespace DevFitness.Core.Entities
 {
-    public class User : Base
+    public class User : Entity
     {
         protected User()
         {
         }
+
         public User(string fullName, decimal height, decimal weight, DateTime birthDate) : base()
         {
             FullName = fullName;
             Height = height;
             Weight = weight;
             BirthDate = birthDate;
+            Active = true;
         }
 
         public string FullName { get; private set; }
         public decimal Height { get; private set; }
         public decimal Weight { get; private set; }
         public DateTime BirthDate { get; private set; }
+        public bool Active { get; private set; }
 
         public IEnumerable<Meal> Meals { get; private set; }
-
-        public void Update(decimal height, decimal weight)
-        {
-            if (height > 0 && weight > 0)
-            {
-                this.Height = height;
-                this.Weight = weight;
-            }
-        }
     }
 }
