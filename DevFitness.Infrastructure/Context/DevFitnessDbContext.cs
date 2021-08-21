@@ -1,7 +1,7 @@
-﻿using DevFitness.API.Core.Entities;
+﻿using DevFitness.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevFitness.API.Persistence
+namespace DevFitness.Infrastructure.Context
 {
     public class DevFitnessDbContext : DbContext
     {
@@ -23,7 +23,7 @@ namespace DevFitness.API.Persistence
                     user.Property(u => u.BirthDate).IsRequired();
                     user.Property(u => u.CreatedAt).IsRequired();
                     user.Property(u => u.Active).IsRequired().HasMaxLength(1);
-                    user.HasMany(u => u.Meals) //um usuário tem muitas refeições
+                    user.HasMany(u => u.Meals)
                         .WithOne()
                         .HasForeignKey(m => m.UserId)
                         .OnDelete(DeleteBehavior.Restrict);
@@ -37,7 +37,6 @@ namespace DevFitness.API.Persistence
                     meal.Property(m => m.Description).HasMaxLength(40).IsRequired();
                     meal.Property(m => m.Calories).IsRequired();
                     meal.Property(m => m.Date).IsRequired();
-                    meal.Property(m => m.Active).IsRequired().HasMaxLength(1);
                     meal.Property(m => m.CreatedAt).IsRequired();
                 }
             );

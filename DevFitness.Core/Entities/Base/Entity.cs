@@ -13,11 +13,5 @@ namespace DevFitness.Core.Entities.Base
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAT { get; private set; }
-
-
-        public void Desactivate()
-        {
-            this.Active = false;
-        }
     }
 }

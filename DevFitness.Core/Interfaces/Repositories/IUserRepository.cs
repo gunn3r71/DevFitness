@@ -4,9 +4,7 @@ using DevFitness.Core.Interfaces.Repositories.Base;
 
 namespace DevFitness.Core.Interfaces.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository
     {
-        Task DisableUser(int id);
-        Task EnableUser(int id);
     }
 }

@@ -4,8 +4,7 @@ using DevFitness.Core.Interfaces.Repositories.Base;
 
 namespace DevFitness.Core.Interfaces.Repositories
 {
-    public interface IMealRepository : IRepository<Meal>
+    public interface IMealRepository
     {
-        Task Delete(int id);
     }
 }

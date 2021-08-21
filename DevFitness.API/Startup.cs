@@ -1,4 +1,3 @@
-using DevFitness.API.Persistence;
 using DevFitness.API.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

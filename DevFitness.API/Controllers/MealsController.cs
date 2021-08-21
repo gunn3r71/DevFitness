@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
-using DevFitness.API.Core.Entities;
 using DevFitness.API.Models.InputModels;
 using DevFitness.API.Models.ViewModels;
-using DevFitness.API.Persistence;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DevFitness.API.Controllers
 {
@@ -16,70 +9,70 @@ namespace DevFitness.API.Controllers
     [ApiController]
     public class MealsController : ControllerBase
     {
-        private readonly DevFitnessDbContext _context;
-        private readonly IMapper _mapper;
+        //private readonly DevFitnessDbContext _context;
+        //private readonly IMapper _mapper;
 
-        public MealsController(DevFitnessDbContext context,IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+        //public MealsController(DevFitnessDbContext context,IMapper mapper)
+        //{
+        //    _context = context;
+        //    _mapper = mapper;
+        //}
 
-        [HttpGet]
-        public IActionResult Get(int userId)
-        {
-            var allMeals = _context.Meals.Where(x => x.UserId == userId).ToList();
-            var allMealsViewModel = allMeals.Select(x => _mapper.Map<MealViewModel>(x));
-            return Ok(allMealsViewModel);
-        }
+        //[HttpGet]
+        //public IActionResult Get(int userId)
+        //{
+        //    var allMeals = _context.Meals.Where(x => x.UserId == userId).ToList();
+        //    var allMealsViewModel = allMeals.Select(x => _mapper.Map<MealViewModel>(x));
+        //    return Ok(allMealsViewModel);
+        //}
         
-        [HttpGet("{mealId}")]
-        public IActionResult Get(int userId,int mealId)
-        {
-            var meal = _context.Meals.SingleOrDefault(x => x.Id == mealId && x.UserId == userId);
-            if (meal == null)
-                return NotFound($"Cannot find mealt with id: {mealId}");
+        //[HttpGet("{mealId}")]
+        //public IActionResult Get(int userId,int mealId)
+        //{
+        //    var meal = _context.Meals.SingleOrDefault(x => x.Id == mealId && x.UserId == userId);
+        //    if (meal == null)
+        //        return NotFound($"Cannot find mealt with id: {mealId}");
             
-            var mealviewModel = _mapper.Map<MealViewModel>(meal);
+        //    var mealviewModel = _mapper.Map<MealViewModel>(meal);
 
-            return Ok(mealviewModel);
-        }
+        //    return Ok(mealviewModel);
+        //}
 
-        [HttpPost]
-        public IActionResult Post(int userId,[FromBody] CreateMealInputModel meal)
-        {
-            var _meal = new Meal(meal.Description,meal.Calories,meal.Date,userId);
-            _context.Meals.Add(_meal);
-            _context.SaveChanges();
+        //[HttpPost]
+        //public IActionResult Post(int userId,[FromBody] CreateMealInputModel meal)
+        //{
+        //    var _meal = new Meal(meal.Description,meal.Calories,meal.Date,userId);
+        //    _context.Meals.Add(_meal);
+        //    _context.SaveChanges();
 
-            return CreatedAtAction(nameof(Get), new { UserId = userId, MealId = _meal.Id}, meal);
-        }
+        //    return CreatedAtAction(nameof(Get), new { UserId = userId, MealId = _meal.Id}, meal);
+        //}
 
-        [HttpPut("{mealId}")]
-        public IActionResult Put(int userId, int mealId, [FromBody] UpdateMealInputModel meal)
-        {
-            var _meal = _context.Meals.SingleOrDefault(x => x.Id == mealId && x.UserId == userId);
-            if (_meal == null)
-                return NotFound($"Cannot find meal with id: {mealId}");
+        //[HttpPut("{mealId}")]
+        //public IActionResult Put(int userId, int mealId, [FromBody] UpdateMealInputModel meal)
+        //{
+        //    var _meal = _context.Meals.SingleOrDefault(x => x.Id == mealId && x.UserId == userId);
+        //    if (_meal == null)
+        //        return NotFound($"Cannot find meal with id: {mealId}");
 
-            _meal.Update(meal.Description,meal.Calories, meal.Date);
-            _context.SaveChanges();
+        //    _meal.Update(meal.Description,meal.Calories, meal.Date);
+        //    _context.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        [HttpDelete("{mealId}")]
-        public IActionResult Delete(int userId, int mealId)
-        {
-            var _meal = _context.Meals.SingleOrDefault(x => x.Id == mealId && x.UserId == userId);
-            if (_meal == null)
-                return NotFound($"Cannot find meal with id: {mealId}");
+        //[HttpDelete("{mealId}")]
+        //public IActionResult Delete(int userId, int mealId)
+        //{
+        //    var _meal = _context.Meals.SingleOrDefault(x => x.Id == mealId && x.UserId == userId);
+        //    if (_meal == null)
+        //        return NotFound($"Cannot find meal with id: {mealId}");
 
-            _meal.Desactivate();
+        //    _meal.Desactivate();
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }
