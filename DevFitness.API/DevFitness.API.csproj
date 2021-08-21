@@ -33,4 +33,14 @@
     <ProjectReference Include="..\DevFitness.Infrastructure\DevFitness.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings - Cópia.Production.json">
+      <DependentUpon>appsettings.Production.json</DependentUpon>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>

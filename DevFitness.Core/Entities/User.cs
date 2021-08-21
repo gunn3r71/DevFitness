@@ -10,7 +10,7 @@ namespace DevFitness.Core.Entities
         {
         }
 
-        public User(string fullName, decimal height, decimal weight, DateTime birthDate) : base()
+        public User(string fullName, double height, double weight, DateTime birthDate) : base()
         {
             FullName = fullName;
             Height = height;
@@ -20,11 +20,21 @@ namespace DevFitness.Core.Entities
         }
 
         public string FullName { get; private set; }
-        public decimal Height { get; private set; }
-        public decimal Weight { get; private set; }
+        public double Height { get; private set; }
+        public double Weight { get; private set; }
         public DateTime BirthDate { get; private set; }
         public bool Active { get; private set; }
 
         public IEnumerable<Meal> Meals { get; private set; }
+
+        public void Disable()
+        {
+            Active = false;
+        }
+
+        public void Enable()
+        {
+            Active = true;
+        }
     }
 }

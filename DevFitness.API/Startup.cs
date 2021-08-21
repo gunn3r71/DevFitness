@@ -35,12 +35,12 @@ namespace DevFitness.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string ConnectionString = Configuration.GetConnectionString("DevFitnessCs");
+            string connectionString = Configuration.GetConnectionString("DevFitnessCs");
 
             services.AddDbContext<DevFitnessDbContext>(
                 options =>
                 {
-                    options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
+                    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 });
 
             services.AddAutoMapper(typeof(UserProfile));
@@ -64,8 +64,7 @@ namespace DevFitness.API
                 c.IncludeXmlComments(path);
             });
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

@@ -4,7 +4,7 @@ using DevFitness.Core.Interfaces.Repositories.Base;
 
 namespace DevFitness.Core.Interfaces.Repositories
 {
-    public interface IMealRepository
+    public interface IMealRepository : IRepository<Meal>
     {
     }
 }
