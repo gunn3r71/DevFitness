@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <UserSecretsId>73bd6bf9-d894-4751-b486-ef30db1d223c</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,6 +27,10 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0-preview.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevFitness.Infrastructure\DevFitness.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
