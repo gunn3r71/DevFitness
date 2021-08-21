@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
+using DevFitness.API.Configuration;
 using DevFitness.Infrastructure.Context;
 
 namespace DevFitness.API
@@ -44,6 +45,8 @@ namespace DevFitness.API
                 });
 
             services.AddAutoMapper(typeof(UserProfile));
+
+            services.ResolveDependencies();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

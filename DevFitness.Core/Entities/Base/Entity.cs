@@ -7,11 +7,11 @@ namespace DevFitness.Core.Entities.Base
         protected Entity()
         {
             this.CreatedAt = DateTime.UtcNow.AddHours(-3);
-            this.UpdatedAT = DateTime.UtcNow.AddHours(-3);
+            this.UpdatedAt = DateTime.UtcNow.AddHours(-3);
         }
 
         public int Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAT { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
     }
 }

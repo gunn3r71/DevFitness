@@ -11,103 +11,111 @@ namespace DevFitness.Infrastructure.Repositories.Base
     public abstract class Repository<T> : IRepository<T> where T : Entity
 
     {
-    protected readonly DevFitnessDbContext Context;
-    protected DbSet<T> Entity = null;
+        protected readonly DevFitnessDbContext Context;
+        protected DbSet<T> Entity = null;
 
-    protected Repository(DevFitnessDbContext context)
-    {
-        Context = context;
-        Entity = Context.Set<T>();
-    }
-
-
-    public async Task<bool> Add(T entity)
-    {
-        try
+        protected Repository(DevFitnessDbContext context)
         {
-            Entity.Add(entity);
-            return (await SaveChangesAsync() == 1);
+            Context = context;
+            Entity = Context.Set<T>();
         }
-        catch (Exception e)
+
+
+        public async Task<bool> Add(T entity)
         {
-            Console.WriteLine(e);
-            throw;
+            try
+            {
+                Entity.Add(entity);
+                return (await SaveChangesAsync() == 1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
-    }
 
-    public async Task<bool> Update(T entity)
-    {
-        try
+        public async Task<bool> Update(T entity)
         {
-            Entity.Update(entity);
-            return (await SaveChangesAsync() == 1);
+            try
+            {
+                Entity.Update(entity);
+                return (await SaveChangesAsync() == 1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
-        catch (Exception e)
+
+        public async Task<bool> Delete(int id)
         {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
+            try
+            {
+                var entity = await GetById(id);
 
-    public async Task<bool> Delete(int id)
-    {
-        try
+                if (entity == null) return false;
+
+                Entity.Remove(entity);
+
+                return (await SaveChangesAsync() == 1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<T>> Get()
         {
-            var entity = await GetById(id);
-
-            if (entity == null) return false;
-
-            Entity.Remove(entity);
-
-            return (await SaveChangesAsync() == 1);
+            try
+            {
+                return await Entity.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
-        catch (Exception e)
+
+        public async Task<T> GetById(int id)
         {
-            Console.WriteLine(e);
-            throw;
+            try
+            {
+                return await Entity.FindAsync(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
-    }
 
-    public async Task<IEnumerable<T>> Get()
-    {
-        try
+
+        public async Task<int> SaveChangesAsync()
         {
-            return await Entity.ToListAsync();
+            try
+            {
+                return await Context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
-        catch (Exception e)
+
+        public Task RollBack()
         {
-            Console.WriteLine(e);
-            throw;
+            return Task.CompletedTask;
         }
-    }
 
-    public async Task<T> GetById(int id)
-    {
-        try
+        public void Dispose()
         {
-            return await Entity.FindAsync(id);
+            Context?.Dispose();
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-
-
-    public async Task<int> SaveChangesAsync()
-    {
-        return await Context.SaveChangesAsync();
-    }
-
-    public Task RollBack()
-    {
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        Context?.Dispose();
-    }
     }
 }

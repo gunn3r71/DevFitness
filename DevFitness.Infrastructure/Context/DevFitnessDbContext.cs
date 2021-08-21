@@ -21,6 +21,8 @@ namespace DevFitness.Infrastructure.Context
                     user.Property(u => u.Id).ValueGeneratedOnAdd().IsRequired();
                     user.Property(u => u.FullName).HasMaxLength(100).IsRequired();
                     user.Property(u => u.BirthDate).IsRequired();
+                    user.Property(u => u.Height).HasPrecision(2).IsRequired();
+                    user.Property(u => u.Weight).HasPrecision(2).IsRequired();
                     user.Property(u => u.CreatedAt).IsRequired();
                     user.Property(u => u.Active).IsRequired().HasMaxLength(1);
                     user.HasMany(u => u.Meals)

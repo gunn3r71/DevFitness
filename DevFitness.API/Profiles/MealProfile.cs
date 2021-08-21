@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DevFitness.API.Models.InputModels;
-using DevFitness.API.Models.ViewModels;
 using DevFitness.Core.Entities;
 
 namespace DevFitness.API.Profiles
@@ -9,8 +7,8 @@ namespace DevFitness.API.Profiles
     {
         public MealProfile()
         {
-            CreateMap<Meal, MealViewModel>();
-            CreateMap<CreateMealInputModel, Meal>();
+            //CreateMap<Meal, MealViewModel>();
+            //CreateMap<CreateMealInputModel, Meal>();
         }
     }
 }

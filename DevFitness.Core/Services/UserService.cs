@@ -25,7 +25,7 @@ namespace DevFitness.Core.Services
                 if (!this.ExecuteValidation(new UserValidation(), user))
                     throw new Exception("Please check the fields entered.");
 
-                if (await _userRepository.Add(user))
+                if (!await _userRepository.Add(user))
                     throw new Exception("Something went wrong trying to add");
             }
             catch (Exception e)

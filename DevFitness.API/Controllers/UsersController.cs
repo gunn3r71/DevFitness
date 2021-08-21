@@ -1,60 +1,80 @@
-﻿using AutoMapper;
-using DevFitness.API.Models.InputModels;
-using DevFitness.API.Models.ViewModels;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using DevFitness.API.Models.users.InputModels;
+using DevFitness.API.Models.users.ViewModels;
+using DevFitness.Core.Entities;
+using Microsoft.AspNetCore.Mvc;
+using DevFitness.Core.Interfaces.Services;
 
 namespace DevFitness.API.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Users API
+    /// </summary>
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        //private readonly DevFitnessDbContext _context;
-        //private readonly IMapper _mapper;
-        //public UsersController(DevFitnessDbContext context, IMapper mapper)
-        //{
-        //    _context = context;
-        //    _mapper = mapper;
-        //}
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        //[HttpGet("{id}")]
-        //public IActionResult Get(int id)
-        //{
-        //    var _user = _context.Users.SingleOrDefault(x => x.Id == id && x.Active);
+        /// <summary>
+        /// Dependency Injection Builder
+        /// </summary>
+        /// <param name="userService">Service</param>
+        /// <param name="mapper">Auto Mapper</param>
+        public UsersController(IUserService userService, IMapper mapper)
+        {
+            _userService = userService;
+            _mapper = mapper;
+        }
 
-        //    if (_user == null)
-        //        return NotFound($"Cannot find user with id: {id}");
+        /// <summary>
+        /// Get user by Id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var _user = await _userService.GetById(id);
+                
+                var userViewModel = _mapper.Map<UserViewModel>(_user);
 
-        //    var userViewModel = _mapper.Map<UserViewModel>(_user);
+                return Ok(userViewModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
-        //    return Ok(userViewModel);
-        //}
-        ///// api/users método HTTP POST
-        ///// <summary>
-        ///// Create a new user
-        ///// </summary>
-        ///// <remarks>
-        ///// {
-        /////     "fullname"
-        ///// }
-        ///// </remarks>
-        ///// <param name="user"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public IActionResult Post([FromBody] CreateUserInputModel user)
-        //{
-        //    var _user = _mapper.Map<User>(user);
+        /// <summary>
+        /// Add new user
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>201</returns>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] AddUserInputModel userInputModel)
+        {
+            try
+            {
+                var user = _mapper.Map<User>(userInputModel);
 
-        //    _context.Users.Add(_user);
-        //    _context.SaveChanges();
+                await _userService.Add(user);
 
-        //    return CreatedAtAction(nameof(Get), new { Id = _user.Id}, user);
-        //}
+                return CreatedAtAction(nameof(GetById), new { Id = user.Id });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
         //[HttpPut("{id}")]
         //public IActionResult Put(int id, [FromBody] UpdateUserInputModel user)

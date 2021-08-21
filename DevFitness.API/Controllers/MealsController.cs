@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DevFitness.API.Models.InputModels;
-using DevFitness.API.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFitness.API.Controllers
