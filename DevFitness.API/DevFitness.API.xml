@@ -28,7 +28,7 @@
             <param name="userService">Service</param>
             <param name="mapper">Auto Mapper</param>
         </member>
-        <member name="M:DevFitness.API.Controllers.UsersController.Get(System.Int32)">
+        <member name="M:DevFitness.API.Controllers.UsersController.GetById(System.Int32)">
             <summary>
             Get user by Id
             </summary>
@@ -39,7 +39,7 @@
             <summary>
             Add new user
             </summary>
-            <param name="user">User</param>
+            <param name="userInputModel">User</param>
             <returns>201</returns>
         </member>
         <member name="T:DevFitness.API.Models.users.InputModels.AddUserInputModel">

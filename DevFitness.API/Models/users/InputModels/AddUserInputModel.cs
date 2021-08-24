@@ -3,7 +3,7 @@
 namespace DevFitness.API.Models.users.InputModels
 {
     /// <summary>
-    /// User model
+    /// Add user model
     /// </summary>
     public class AddUserInputModel
     {

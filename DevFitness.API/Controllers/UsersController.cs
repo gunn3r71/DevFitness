@@ -40,9 +40,9 @@ namespace DevFitness.API.Controllers
         {
             try
             {
-                var _user = await _userService.GetById(id);
+                var user = await _userService.GetById(id);
                 
-                var userViewModel = _mapper.Map<UserViewModel>(_user);
+                var userViewModel = _mapper.Map<UserViewModel>(user);
 
                 return Ok(userViewModel);
             }
@@ -56,7 +56,7 @@ namespace DevFitness.API.Controllers
         /// <summary>
         /// Add new user
         /// </summary>
-        /// <param name="user">User</param>
+        /// <param name="userInputModel">User</param>
         /// <returns>201</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserInputModel userInputModel)
@@ -67,7 +67,7 @@ namespace DevFitness.API.Controllers
 
                 await _userService.Add(user);
 
-                return CreatedAtAction(nameof(GetById), new { Id = user.Id });
+                return CreatedAtRoute("", user.Id);
             }
             catch (Exception e)
             {
@@ -76,17 +76,17 @@ namespace DevFitness.API.Controllers
             }
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, [FromBody] UpdateUserInputModel user)
-        //{
-        //    var _user = _context.Users.SingleOrDefault(x => x.Id == id);
-        //    if (_user == null)
-        //        return NotFound($"Cannot find user with id: {id}");
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] UpdateUserInputModel user)
+        {
+            var _user = _context.Users.SingleOrDefault(x => x.Id == id);
+            if (_user == null)
+                return NotFound($"Cannot find user with id: {id}");
 
-        //    _user.Update(user.Height,user.Weight);
-        //    _context.SaveChanges();
+            _user.Update(user.Height, user.Weight);
+            _context.SaveChanges();
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
     }
 }
