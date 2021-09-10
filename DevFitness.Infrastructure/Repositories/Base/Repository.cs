@@ -21,12 +21,11 @@ namespace DevFitness.Infrastructure.Repositories.Base
         }
 
 
-        public async Task<bool> Add(T entity)
+        public async Task Add(T entity)
         {
             try
             {
-                Entity.Add(entity);
-                return (await SaveChangesAsync() == 1);
+                await Entity.AddAsync(entity);
             }
             catch (Exception e)
             {
@@ -35,12 +34,12 @@ namespace DevFitness.Infrastructure.Repositories.Base
             }
         }
 
-        public async Task<bool> Update(T entity)
+        public Task Update(T entity)
         {
             try
             {
                 Entity.Update(entity);
-                return (await SaveChangesAsync() == 1);
+                return Task.CompletedTask;
             }
             catch (Exception e)
             {
@@ -49,17 +48,13 @@ namespace DevFitness.Infrastructure.Repositories.Base
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
                 var entity = await GetById(id);
 
-                if (entity == null) return false;
-
                 Entity.Remove(entity);
-
-                return (await SaveChangesAsync() == 1);
             }
             catch (Exception e)
             {
@@ -92,25 +87,6 @@ namespace DevFitness.Infrastructure.Repositories.Base
                 Console.WriteLine(e);
                 throw;
             }
-        }
-
-
-        public async Task<int> SaveChangesAsync()
-        {
-            try
-            {
-                return await Context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        public Task RollBack()
-        {
-            return Task.CompletedTask;
         }
 
         public void Dispose()

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Interfaces\UnitOfWork\" />
     <Folder Include="Interfaces\Services\Base\" />
     <Folder Include="Services\Base\" />
   </ItemGroup>
