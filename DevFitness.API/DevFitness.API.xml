@@ -32,19 +32,34 @@
             <summary>
             Get user by Id
             </summary>
+            <remarks>
+            GET api/v1/users/1
+            </remarks>>
             <param name="id">User id</param>
-            <returns></returns>
+            <returns>The user</returns>
+            <response code="200">Success</response>
+            <response code="404">Not found</response>
         </member>
         <member name="M:DevFitness.API.Controllers.UsersController.Post(DevFitness.API.Models.users.InputModels.AddUserInputModel)">
             <summary>
             Add new user
             </summary>
             <param name="userInputModel">User</param>
-            <returns>201</returns>
+            <returns>Get route</returns>
+            <response code="201">Success</response>
+            <response code="400">Invalid model state</response>
+        </member>
+        <member name="M:DevFitness.API.Controllers.UsersController.Put(System.Int32,DevFitness.API.Models.users.InputModels.UpdateUserInputModel)">
+            <summary>
+            Update user
+            </summary>
+            <param name="id">User id</param>
+            <param name="user">User model</param>
+            <returns>No content</returns>
         </member>
         <member name="T:DevFitness.API.Models.users.InputModels.AddUserInputModel">
             <summary>
-            User model
+            Add user model
             </summary>
         </member>
         <member name="P:DevFitness.API.Models.users.InputModels.AddUserInputModel.FullName">
@@ -63,6 +78,37 @@
             </summary>
         </member>
         <member name="P:DevFitness.API.Models.users.InputModels.AddUserInputModel.BirthDate">
+            <summary>
+            User birthdate
+            </summary>
+        </member>
+        <member name="T:DevFitness.API.Models.users.InputModels.UpdateUserInputModel">
+            <summary>
+            Update user model
+            </summary>
+            Campos nulos para escapar dos valores default
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.Id">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.FullName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.Height">
+            <summary>
+            User height
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.Weight">
+            <summary>
+            User weight
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.BirthDate">
             <summary>
             User birthdate
             </summary>

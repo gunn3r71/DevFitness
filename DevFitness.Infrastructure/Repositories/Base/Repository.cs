@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 namespace DevFitness.Infrastructure.Repositories.Base
 {
     public abstract class Repository<T> : IRepository<T> where T : Entity
-
     {
         protected readonly DevFitnessDbContext Context;
         protected DbSet<T> Entity = null;

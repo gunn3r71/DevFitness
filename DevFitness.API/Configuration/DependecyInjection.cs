@@ -1,6 +1,8 @@
 ﻿using DevFitness.Core.Interfaces.Repositories;
 using DevFitness.Core.Interfaces.Services;
+using DevFitness.Core.Interfaces.UnitOfWork;
 using DevFitness.Core.Services;
+using DevFitness.Infrastructure;
 using DevFitness.Infrastructure.Context;
 using DevFitness.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +23,7 @@ namespace DevFitness.API.Configuration
         {
             services.AddScoped<DevFitnessDbContext>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

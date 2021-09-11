@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DevFitness.Core.Entities;
 using DevFitness.Core.Interfaces.Repositories;
 using DevFitness.Core.Interfaces.Services;
+using DevFitness.Core.Interfaces.UnitOfWork;
 using DevFitness.Core.Services.Base;
 using DevFitness.Core.Validations.Users;
 
@@ -11,10 +12,12 @@ namespace DevFitness.Core.Services
 {
     public class UserService : Service, IUserService
     {
+        private readonly IUnitOfWork _unitOfWork = null;
         private readonly IUserRepository _userRepository = null;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork,IUserRepository userRepository)
         {
+            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
         }
 
@@ -24,8 +27,10 @@ namespace DevFitness.Core.Services
             {
                 if (!this.ExecuteValidation(new UserValidation(), user))
                     throw new Exception("Please check the fields entered.");
-
-                if (!await _userRepository.Add(user))
+                
+                await _userRepository.Add(user);
+                
+                if (!await _unitOfWork.Commit())
                     throw new Exception("Something went wrong trying to add");
             }
             catch (Exception e)
@@ -41,8 +46,8 @@ namespace DevFitness.Core.Services
             {
                 if (!this.ExecuteValidation(new UserValidation(), user))
                     throw new Exception("Please check the fields entered.");
-
-                if (await _userRepository.Update(user))
+                await _userRepository.Update(user);
+                if (!await _unitOfWork.Commit())
                     throw new Exception("Something went wrong while trying to update.");
             }
             catch (Exception e)
@@ -85,8 +90,9 @@ namespace DevFitness.Core.Services
                     throw new Exception("User not found.");
 
                 user.Disable();
+                await _userRepository.Update(user);
 
-                if (await _userRepository.Update(user))
+                if (!await _unitOfWork.Commit())
                     throw new Exception("Something went wrong while trying to update.");
             }
             catch (Exception e)
@@ -106,8 +112,9 @@ namespace DevFitness.Core.Services
                     throw new Exception("User not found.");
 
                 user.Enable();
+                await _userRepository.Update(user);
 
-                if (await _userRepository.Update(user))
+                if (!await _unitOfWork.Commit())
                     throw new Exception("Something went wrong while trying to update.");
             }
             catch (Exception e)

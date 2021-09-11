@@ -6,6 +6,7 @@ using DevFitness.API.Models.users.ViewModels;
 using DevFitness.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using DevFitness.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace DevFitness.API.Controllers
 {
@@ -33,9 +34,16 @@ namespace DevFitness.API.Controllers
         /// <summary>
         /// Get user by Id
         /// </summary>
+        /// <remarks>
+        /// GET api/v1/users/1
+        /// </remarks>>
         /// <param name="id">User id</param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
+        /// <returns>The user</returns>
+        /// <response code="200">Success</response>
+        /// <response code="404">Not found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -57,7 +65,11 @@ namespace DevFitness.API.Controllers
         /// Add new user
         /// </summary>
         /// <param name="userInputModel">User</param>
-        /// <returns>201</returns>
+        /// <returns>Get route</returns>
+        /// <response code="201">Success</response>
+        /// <response code="400">Invalid model state</response>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserInputModel userInputModel)
         {
@@ -76,17 +88,30 @@ namespace DevFitness.API.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateUserInputModel user)
+        /// <summary>
+        /// Update user
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <param name="user">User model</param>
+        /// <returns>No content</returns>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateUserInputModel user)
         {
-            var _user = _context.Users.SingleOrDefault(x => x.Id == id);
-            if (_user == null)
-                return NotFound($"Cannot find user with id: {id}");
+            try
+            {
+                if (id != user.Id) return BadRequest("Invalid ID");
 
-            _user.Update(user.Height, user.Weight);
-            _context.SaveChanges();
+                await _userService.Update(_mapper.Map<User>(user));
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
