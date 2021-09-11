@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using DevFitness.API.Configuration;
+using DevFitness.API.Middlewares;
 using DevFitness.Infrastructure.Context;
 
 namespace DevFitness.API
@@ -87,6 +88,8 @@ namespace DevFitness.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

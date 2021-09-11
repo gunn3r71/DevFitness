@@ -17,8 +17,10 @@ namespace DevFitness.Core.Validations.Users
             RuleFor(x => x.BirthDate)
                 .NotEmpty()
                 .WithMessage("The {PropertyName} field needs to be provided.")
-                .LessThan(DateTime.UtcNow)
-                .WithMessage("The anniversary date must be less than the current date.");
+                .LessThan(DateTime.UtcNow.Date)
+                .WithMessage("The anniversary date must be less than the current date.")
+                .GreaterThan(new DateTime(year: 1920, month: 01, day: 01))
+                .WithMessage("The anniversary date must be greater than the current date.");
             RuleFor(x => x.Height)
                 .NotEmpty()
                 .WithMessage("The {PropertyName} field needs to be provided.")

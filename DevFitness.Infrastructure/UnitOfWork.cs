@@ -8,19 +8,21 @@ namespace DevFitness.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IUserRepository _userRepository;
-        public DevFitnessDbContext Context;
+        private readonly DevFitnessDbContext _context;
 
         public UnitOfWork(DevFitnessDbContext context)
         {
-            Context = context;
+            _context = context;
         }
-
-        public IUserRepository UserRepository => _userRepository ?? new UserRepository(Context);
 
         public async Task<bool> Commit()
         {
-            return (await Context.SaveChangesAsync() >= 1);
+            return (await _context.SaveChangesAsync() >= 1);
+        }
+
+        public Task RollBack()
+        {
+            return Task.CompletedTask;
         }
     }
 }

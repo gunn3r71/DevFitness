@@ -23,6 +23,7 @@ namespace DevFitness.API.Configuration
         {
             services.AddScoped<DevFitnessDbContext>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;

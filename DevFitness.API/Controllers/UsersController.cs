@@ -78,8 +78,8 @@ namespace DevFitness.API.Controllers
                 var user = _mapper.Map<User>(userInputModel);
 
                 await _userService.Add(user);
-
-                return CreatedAtRoute("", user.Id);
+                
+                return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
             }
             catch (Exception e)
             {

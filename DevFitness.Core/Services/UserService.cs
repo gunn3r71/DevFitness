@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevFitness.Core.Entities;
+using DevFitness.Core.Exceptions;
 using DevFitness.Core.Interfaces.Repositories;
 using DevFitness.Core.Interfaces.Services;
 using DevFitness.Core.Interfaces.UnitOfWork;
@@ -26,7 +27,7 @@ namespace DevFitness.Core.Services
             try
             {
                 if (!this.ExecuteValidation(new UserValidation(), user))
-                    throw new Exception("Please check the fields entered.");
+                    throw new ValidationException("Please check the fields entered.");
                 
                 await _userRepository.Add(user);
                 
@@ -45,7 +46,7 @@ namespace DevFitness.Core.Services
             try
             {
                 if (!this.ExecuteValidation(new UserValidation(), user))
-                    throw new Exception("Please check the fields entered.");
+                    throw new ValidationException("Please check the fields entered.");
                 await _userRepository.Update(user);
                 if (!await _unitOfWork.Commit())
                     throw new Exception("Something went wrong while trying to update.");
@@ -75,7 +76,7 @@ namespace DevFitness.Core.Services
             var user = await _userRepository.GetById(id);
 
             if (user == null)
-                throw new Exception("User not found.");
+                throw new NotExistsException("User not found.");
 
             return user;
         }
@@ -87,7 +88,7 @@ namespace DevFitness.Core.Services
                 var user = await _userRepository.GetById(id);
 
                 if (user == null)
-                    throw new Exception("User not found.");
+                    throw new NotExistsException("User not found.");
 
                 user.Disable();
                 await _userRepository.Update(user);
@@ -109,7 +110,7 @@ namespace DevFitness.Core.Services
                 var user = await _userRepository.GetById(id);
 
                 if (user == null)
-                    throw new Exception("User not found.");
+                    throw new NotExistsException("User not found.");
 
                 user.Enable();
                 await _userRepository.Update(user);
