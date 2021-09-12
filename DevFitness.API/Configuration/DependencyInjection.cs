@@ -12,7 +12,7 @@ namespace DevFitness.API.Configuration
     /// <summary>
     /// Class that solves the dependencies
     /// </summary>
-    public static class DependecyInjection
+    public static class DependencyInjection
     {
         /// <summary>
         /// Extension method to resolve dependencies
