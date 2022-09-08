@@ -63,9 +63,9 @@ namespace DevFitness.API
                         Url = new Uri("https://www.linkedin.com/in/lucas-pereira-cod3r/")
                     }
                 });
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var path = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(path);
+                c.IncludeXmlComments(path);*/
             });
         }
         
