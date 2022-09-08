@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevFitness.API</name>
+    </assembly>
+    <members>
+        <member name="T:DevFitness.API.Configuration.DependencyInjection">
+            <summary>
+            Class that solves the dependencies
+            </summary>
+        </member>
+        <member name="M:DevFitness.API.Configuration.DependencyInjection.ResolveDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Extension method to resolve dependencies
+            </summary>
+            <param name="services">Service collection</param>
+            <returns>Service collection</returns>
+        </member>
+        <member name="T:DevFitness.API.Controllers.UsersController">
+            <summary>
+            Users API
+            </summary>
+        </member>
+        <member name="M:DevFitness.API.Controllers.UsersController.#ctor(DevFitness.Core.Interfaces.Services.IUserService,AutoMapper.IMapper)">
+            <summary>
+            Dependency Injection Builder
+            </summary>
+            <param name="userService">Service</param>
+            <param name="mapper">Auto Mapper</param>
+        </member>
+        <member name="M:DevFitness.API.Controllers.UsersController.GetById(System.Int32)">
+            <summary>
+            Get user by Id
+            </summary>
+            <remarks>
+            GET api/v1/users/1
+            </remarks>>
+            <param name="id">User id</param>
+            <returns>The user</returns>
+            <response code="200">Success</response>
+            <response code="404">Not found</response>
+        </member>
+        <member name="M:DevFitness.API.Controllers.UsersController.Post(DevFitness.API.Models.users.InputModels.AddUserInputModel)">
+            <summary>
+            Add new user
+            </summary>
+            <param name="userInputModel">User</param>
+            <returns>Get route</returns>
+            <response code="201">Success</response>
+            <response code="400">Invalid model state</response>
+        </member>
+        <member name="M:DevFitness.API.Controllers.UsersController.Put(System.Int32,DevFitness.API.Models.users.InputModels.UpdateUserInputModel)">
+            <summary>
+            Update user
+            </summary>
+            <param name="id">User id</param>
+            <param name="user">User model</param>
+            <returns>No content</returns>
+        </member>
+        <member name="T:DevFitness.API.Models.users.InputModels.AddUserInputModel">
+            <summary>
+            Add user model
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.AddUserInputModel.FullName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.AddUserInputModel.Height">
+            <summary>
+            User height
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.AddUserInputModel.Weight">
+            <summary>
+            User weight
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.AddUserInputModel.BirthDate">
+            <summary>
+            User birthdate
+            </summary>
+        </member>
+        <member name="T:DevFitness.API.Models.users.InputModels.UpdateUserInputModel">
+            <summary>
+            Update user model
+            </summary>
+            Campos nulos para escapar dos valores default
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.Id">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.FullName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.Height">
+            <summary>
+            User height
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.Weight">
+            <summary>
+            User weight
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.InputModels.UpdateUserInputModel.BirthDate">
+            <summary>
+            User birthdate
+            </summary>
+        </member>
+        <member name="T:DevFitness.API.Models.users.ViewModels.UserViewModel">
+            <summary>
+            User model
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.ViewModels.UserViewModel.Id">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.ViewModels.UserViewModel.FullName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.ViewModels.UserViewModel.Height">
+            <summary>
+            User height
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.ViewModels.UserViewModel.Weight">
+            <summary>
+            User weight
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.ViewModels.UserViewModel.BirthDate">
+            <summary>
+            User birthdate
+            </summary>
+        </member>
+        <member name="P:DevFitness.API.Models.users.ViewModels.UserViewModel.Active">
+            <summary>
+            User status
+            </summary>
+        </member>
+        <member name="T:DevFitness.API.Profiles.UserProfile">
+            <summary>
+            Mapper configuration
+            </summary>
+        </member>
+        <member name="M:DevFitness.API.Profiles.UserProfile.#ctor">
+            <summary>
+            User mapping
+            </summary>
+        </member>
+    </members>
+</doc>
